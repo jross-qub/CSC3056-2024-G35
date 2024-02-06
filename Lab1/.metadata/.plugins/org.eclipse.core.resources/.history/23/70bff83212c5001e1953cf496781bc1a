@@ -24,7 +24,9 @@ public class UserTest {
 		User testUser = new User(test_username, test_password, test_first_name, 
 				test_last_name, test_mobile_number);
 		
-		// 3- Verify (Assert) 		
+		// 3- Verify (Assert) 
+		System.out.println("Starting the assertions of the test method: testUserConstructior");
+		
 		if (testUser.getUsername() == test_username)
 			System.out.println(TestUtils.TEXT_COLOR_GREEN + "TC1-getUsername-Passed"+ TestUtils.TEXT_COLOR_RESET);
 		else
