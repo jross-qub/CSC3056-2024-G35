@@ -17,8 +17,10 @@ public class Transaction {
 	}
 	
 	public String toString() {
-		return account_number + ", " + transaction_amount + ", " + transaction_date;
-	}
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return String.format("%-10s| %-10s| %-15s",
+                account_number, transaction_amount, dateFormat.format(transaction_date));
+    }
 
 	public String getAccount_number() {
 		return account_number;

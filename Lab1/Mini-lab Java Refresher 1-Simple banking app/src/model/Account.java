@@ -19,8 +19,11 @@ public class Account {
 	}
 	
 	public String toString() {
-		return account_number + ", " + username_of_account_holder + ", " + account_type + ", " + account_opening_date;
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	    return String.format("%-10s| %-30s| %-10s| %-15s",
+	            account_number, username_of_account_holder, account_type, dateFormat.format(account_opening_date));
 	}
+
 	
 	public String getAccount_number() {
 		return account_number;
