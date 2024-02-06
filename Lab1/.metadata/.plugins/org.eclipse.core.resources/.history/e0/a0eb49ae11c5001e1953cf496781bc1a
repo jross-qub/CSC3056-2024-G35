@@ -27,7 +27,7 @@ public class UserTest {
 		// 3- Verify (Assert) 
 		System.out.println("Starting the assertions of the test method: testUserConstructior");
 		
-		if (testUser.getUsername() == test_username)
+		if (testUser.getUsername() == test_username) // injected defect: "==" was intentionally changed to "!="
 			System.out.println(TestUtils.TEXT_COLOR_GREEN + "TC1-getUsername-Passed"+ TestUtils.TEXT_COLOR_RESET);
 		else
 			System.out.println(TestUtils.TEXT_COLOR_RED + "TC1-getUsername-FAILED"+ TestUtils.TEXT_COLOR_RESET);
