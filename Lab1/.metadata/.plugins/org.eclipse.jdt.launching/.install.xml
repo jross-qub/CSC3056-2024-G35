@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <dirs>
-    <entry loc="/home/usr/UniversityProjects/Testing/Lab1/eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.linux.x86_64_17.0.9.v20231028-0858" stamp="1701465710742"/>
     <entry loc="/Users/jross/.p2/pool/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.aarch64_21.0.2.v20240123-0840" stamp="1707229067053"/>
     <entry loc="/Users/jross/.p2/pool/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.aarch64_21.0.2.v20240123-0840/jre" stamp="1707229067053"/>
     <entry loc="/opt/homebrew/Cellar/openjdk/21.0.1/libexec/openjdk.jdk/Contents/Home" stamp="1696511326000"/>
-    <entry loc="/home/usr/UniversityProjects/Testing/Lab1/eclipse/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.linux.x86_64_17.0.9.v20231028-0858/jre" stamp="1701465710742"/>
-    <entry loc="/home/usr/.sdkman/candidates/java/21.0.1-amzn" stamp="1697082800000"/>
-    <entry loc="/home/usr/.sdkman/candidates/java/11.0.21-amzn" stamp="1696876153000"/>
     <entry loc="/Users/jross/Library/Java/JavaVirtualMachines/corretto-1.8.0_402/Contents/Home" stamp="1707128003984"/>
-    <entry loc="/home/usr/.sdkman/candidates/java/20.0.2-amzn" stamp="1689028974000"/>
 </dirs>
