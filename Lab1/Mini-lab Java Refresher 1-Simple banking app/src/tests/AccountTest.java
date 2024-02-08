@@ -1,7 +1,6 @@
 package tests;
 
 import java.util.Date;
-import java.text.SimpleDateFormat;
 
 import model.Account;
 import utils.TestUtils;
