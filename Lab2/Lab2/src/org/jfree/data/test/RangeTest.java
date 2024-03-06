@@ -3,6 +3,7 @@ package org.jfree.data.test;
 import org.jfree.data.Range;
 import org.junit.*;
 import static org.junit.Assert.*;
+import java.security.InvalidParameterException;
 
 /**
  * Tests for the Range class.
@@ -32,7 +33,7 @@ public class RangeTest {
     }
     
     /**
-     * Start of tests for combine method
+     * Start of tests for combine(Range range1, Range range2) method
      */
     
     @Test
@@ -152,70 +153,49 @@ public class RangeTest {
     }
     
     /**
-     * End of tests for combine method
+     * End of tests for combine(Range range1, Range range2) method
      */
     
     /**
-     * Start of tests for constrain method
+     * Start of tests for constrain(double value) method
      */
 
-    /**
-     * TC1 - Tests the constrain method when the value is less than the lower bound.
-     */
     @Test
     public void testConstrainReturnsLowerBoundWhenValueIsLessThanLowerBound() {
         assertEquals("When the value is less than the lower bound, the constrained value should be the lower bound of the range",
                 -3, rangeObjectUnderTest.constrain(-4), 0.000000001d);
     }
 
-    /**
-     * TC2 - Tests the constrain method when the value is equal to the lower bound.
-     */
     @Test
     public void testConstrainReturnsValueWhenValueIsEqualToLowerBound() {
         assertEquals("When the value equal to the lower bound, the constrained value should be the lower bound of the range",
                 -3, rangeObjectUnderTest.constrain(-3), 0.000000001d);
     }
 
-    /**
-     * TC3 - Tests the constrain method when the value is one greater than the lower bound.
-     */
     @Test
     public void testConstrainReturnsValueWhenValueIsOneGreaterThanLowerBound() {
         assertEquals("When the value is greater than the lower bound, the constrained value should be the input value",
                 -2, rangeObjectUnderTest.constrain(-2), 0.000000001d);
     }
 
-    /**
-     * TC4 - Tests the constrain method when the value is inside the range.
-     */
     @Test
     public void testConstrainReturnsValueWhenValueIsInsideRange() {
         assertEquals("When the value inside the bounds of the range, the constrained value should be the input value",
                 0.4567, rangeObjectUnderTest.constrain(0.4567), 0.000000001d);
     }
 
-    /**
-     * TC5 - Tests the constrain method when the value is less than the upper bound.
-     */
     @Test
     public void testConstrainReturnsValueWhenValueIsLessThanUpperBound() {
         assertEquals("When the value is less than the upper bound, the constrained value should be the input value",
                 4, rangeObjectUnderTest.constrain(4), 0.000000001d);
     }
 
-    /**
-     * TC6 - Tests the constrain method when the value is equal to the upper bound.
-     */
     @Test
     public void testConstrainReturnsValueWhenValueIsEqualToUpperBound() {
         assertEquals("When the value equal to the upper bound, the constrained value should be the lower bound of the range",
                 5, rangeObjectUnderTest.constrain(5), 0.000000001d);
     }
 
-    /**
-     * TC7 - Tests the constrain method when the value is greater than the upper bound.
-     */
     @Test
     public void testConstrainReturnsUpperBoundWhenValueIsGreaterThanLowerBound() {
         assertEquals("When the value is greater than the upper bound, the constrained value should be the upper bound of the range",
@@ -223,11 +203,11 @@ public class RangeTest {
     }
     
     /**
-     * End of tests for constrain method
+     * End of tests for constrain(double value) method
      */
     
     /**
-     * Start of tests for expandToInclude method
+     * Start of tests for expandToInclude(Range range, double value) method
      */
     
     @Test
@@ -348,11 +328,11 @@ public class RangeTest {
     }
     
     /**
-     * End of tests for expandToInclude method
+     * End of tests for expandToInclude(Range range, double value) method
      */
    
     /**
-     * Start of tests for getLowerBound method
+     * Start of tests for getLowerBound() method
      */
     
     @Test
@@ -419,6 +399,138 @@ public class RangeTest {
 
     
     /**
-     * End of tests for getLowerBound method
+     * End of tests for getLowerBound() method
+     */
+    
+    /**
+     * Start of tests for shift(Range base, double value, boolean allowZeroCrossing) method
+     */
+    
+    @Test
+    public void testShiftReturnsShiftedRangeWhenBaseAndDeltaArePositve() {
+    	// Setup
+        Range rangeObjectToTest = new Range(2, 6);
+        Range expectedRangeAfterTest = new Range(3, 7);
+
+    	//Exercise and Verify
+        assertEquals("When the both base and delta are positive, the return should be base shifted to the right by delta", 
+        		expectedRangeAfterTest, Range.shift(rangeObjectToTest, 1, false));
+    }
+
+    @Test
+    public void testShiftReturnsShiftedRangeWhenBaseAndDeltaAreNegative() {
+    	// Setup
+        Range rangeObjectToTest = new Range(-7, -1);
+        Range expectedRangeAfterTest = new Range(-11, -5);
+
+    	//Exercise and Verify
+        assertEquals("When the both base and delta are negative, the return should be base shifted to the left by -delta", 
+        		expectedRangeAfterTest, Range.shift(rangeObjectToTest, -4, true));
+    }
+
+    @Test
+    public void testShiftReturnsShiftedRangeWhenBaseIsAcrossZeroAndDeltaIsZero() {
+    	// Setup
+        Range rangeObjectToTest = new Range(-3, 4);
+        Range expectedRangeAfterTest = new Range(-3, 4);
+
+    	//Exercise and Verify
+        assertEquals("When the both base is across zero and delta is zero, the return should be base unchanged",
+        		expectedRangeAfterTest, Range.shift(rangeObjectToTest, 0, false));
+    }
+    
+    @Test
+    public void testShiftReturnsShiftedRangeWhenBaseIsPostiveAndDeltaIsNegativeAllowZeroCrossing() {
+    	// Setup
+        Range rangeObjectToTest = new Range(5, 5);
+        Range expectedRangeAfterTest = new Range(-3, -3);
+
+    	//Exercise and Verify
+        assertEquals("When the base is positive and delta is negative, the return should be base shifted to the left by -delta, as allowZeroCrossing is True the new upper should NOT be zero",
+        		expectedRangeAfterTest, Range.shift(rangeObjectToTest, -8, true));
+    }
+
+    @Test
+    public void testShiftThrowsExceptionWhenBaseIsNullAndDeltaIsPositive() {
+    	// Setup
+        Range rangeObjectToTest = null;
+
+    	//Exercise and Verify
+		try
+		{
+			Range.shift(rangeObjectToTest, 5, false);
+			fail("When the base is null and delta is positive, an exception should be thrown");
+		}
+		catch (Exception e)
+		{
+			assertTrue(String.format("Incorrect exception type thrown, should be InvalidParameterException. Type is: " + e.getClass().getCanonicalName()),
+					e.getClass().equals(InvalidParameterException.class));
+		}
+    }
+
+    @Test
+    public void testShiftReturnsShiftedRangeWhenBaseIsPositiveAndDeltaIsZero() {
+    	// Setup
+        Range rangeObjectToTest = new Range(5, 10);
+        Range expectedRangeAfterTest = new Range(5, 10);
+
+    	//Exercise and Verify
+        assertEquals("When the both base is positive and delta is zero, the return should be base unchanged",
+        		expectedRangeAfterTest, Range.shift(rangeObjectToTest, 0, true));
+    }
+
+    @Test
+    public void testShiftReturnsShiftedRangeWhenBaseIsNegativeAndDeltaIsPositiveNoAllowZeroCrossing() {
+    	// Setup
+        Range rangeObjectToTest = new Range(-3, -1);
+        Range expectedRangeAfterTest = new Range(-1, 0);
+
+    	//Exercise and Verify
+        assertEquals("When the base is neagtive and delta is positive, the return should be base shifted to the right by delta, as allowZeroCrossing is False the new upper should be zero",
+        		expectedRangeAfterTest, Range.shift(rangeObjectToTest, 2, false));
+    }
+
+    @Test
+    public void testShiftReturnsShiftedRangeWhenBaseIsNegativeAndDeltaIsNegative() {
+    	// Setup
+        Range rangeObjectToTest = new Range(-5, 6);
+        Range expectedRangeAfterTest = new Range(-6, 5);
+
+    	//Exercise and Verify
+        assertEquals("When the both base is positive and delta is zero, the return should be base shifted to the left by -delta",
+        		expectedRangeAfterTest, Range.shift(rangeObjectToTest, -1, true));
+    }
+
+    @Test
+    public void testShiftReturnsShiftedRangeWhenBaseAndDeltaArePositveNoAllowZeroCrossing() {
+    	// Setup
+        Range rangeObjectToTest = new Range(10, 10);
+        Range expectedRangeAfterTest = new Range(13, 13);
+
+        //Exercise and Verify
+        assertEquals("When the both base and delta are positive, the return should be base shifted to the right by delta", 
+        		expectedRangeAfterTest, Range.shift(rangeObjectToTest, 3, false));
+    }
+
+    @Test
+    public void testShiftThrowsExceptionWhenBaseIsNullAndDeltaIsNegative() {
+    	// Setup
+        Range rangeObjectToTest = null;
+
+    	//Exercise and Verify
+		try
+		{
+			Range.shift(rangeObjectToTest, -7, true);
+			fail("When the base is null and delta is negative, an exception should be thrown");
+		}
+		catch (Exception e)
+		{
+			assertTrue(String.format("Incorrect exception type thrown, should be InvalidParameterException. Type is: " + e.getClass().getCanonicalName()),
+					e.getClass().equals(InvalidParameterException.class));
+		}
+    }
+    
+    /**
+     * End of tests for shift method
      */
 }
