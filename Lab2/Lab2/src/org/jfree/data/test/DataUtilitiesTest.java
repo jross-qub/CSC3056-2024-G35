@@ -6,7 +6,6 @@ import org.jfree.data.DefaultKeyedValues2D;
 import org.jfree.data.Values2D;
 import org.junit.*;
 import static org.junit.Assert.*;
-import java.security.InvalidParameterException;
 
 public class DataUtilitiesTest 
 {
@@ -61,7 +60,6 @@ public class DataUtilitiesTest
 		testData2.addValue(7, 4, 1);
 		testData2.addValue(8, 5, 0);
 		testData2.addValue(2, 5, 1);
-
 	}
 
 	@After
@@ -275,4 +273,53 @@ public class DataUtilitiesTest
 					e.getClass().equals(IllegalArgumentException.class));
 		}
 	}
+	
+	/**
+	 * Test for DataUtilities createNumberArray Method
+	 */
+	
+	@Test
+	public void testCreateNumberArrayReturnsCorrectNumberArrayWhenGoodPositiveDataIsInput()
+	{
+		double[] data = {1, 4.7215, 6, 0.2};
+		Number[] expectedOutput = {1.0, 4.7215, 6.0, 0.2};
+		
+		assertEquals("Wrong output. Should be Number array containing input data", expectedOutput, DataUtilities.createNumberArray(data));
+	}
+	
+	@Test
+	public void testCreateNumberArrayReturnsCorrectNumberArrayWhenGoodNegativeDataIsInput()
+	{
+		double[] data = {-5, -6.7, -3, -1.9};
+		Number[] expectedOutput = {-5.0, -6.7, -3.0, -1.9};
+		
+		assertEquals("Wrong output. Should be Number array containing input data", expectedOutput, DataUtilities.createNumberArray(data));
+	}
+	
+	@Test
+	public void testCreateNumberArrayReturnsEmptyNumberArrayWhenDataInputIsEmpty()
+	{
+		double[] data = {};
+		Number[] expectedOutput = {};
+		
+		assertEquals("Wrong output. Should be empty Number array", expectedOutput, DataUtilities.createNumberArray(data));
+	}
+	
+	@Test
+	public void testCreateNumberArrayThrowsExceptionWhenDataIsNull()
+	{
+		double[] data = null;
+		
+		try
+		{
+			DataUtilities.createNumberArray(data);
+			fail("No exception thrown");
+		}
+		catch (Exception e)
+		{
+			assertTrue("Incorrect exception type thrown",
+					e.getClass().equals(IllegalArgumentException.class));
+		}
+	}
+	
 }
