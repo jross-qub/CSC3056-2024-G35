@@ -77,6 +77,10 @@ public class DataUtilitiesTest
 	// 	}
 	// }
 	
+	/**
+	 * Tests for the DataUtilities calculateColumnTotal Method
+	 */
+	
 	@Test
 	public void testCalculateColumnTotalReturns0WhenColumnIsLessThanMinimum() 
 	{
