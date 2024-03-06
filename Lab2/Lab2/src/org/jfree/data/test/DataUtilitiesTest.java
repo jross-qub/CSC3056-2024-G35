@@ -92,6 +92,9 @@ public class DataUtilitiesTest
 	{
 		// values2D = null;
 		testData2D = null;
+		testData2D_2 = null;
+		testDataKeyedValues = null;
+		expectedOutputKeyedValues = null;
 	}
 	
 	// @Test
