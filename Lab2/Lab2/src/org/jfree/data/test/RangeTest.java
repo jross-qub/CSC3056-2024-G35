@@ -351,4 +351,74 @@ public class RangeTest {
      * End of tests for expandToInclude method
      */
    
+    /**
+     * Start of tests for getLowerBound method
+     */
+    
+    @Test
+    public void testGetLowerBoundReturnsLowerBoundWhenBothLowerAndUpperArePositve() {
+    	// Setup
+        Range range = new Range(1, 6.6);
+
+    	//Exercise and Verify
+        assertEquals("When the both lower and upper are positive, lower should be returned",
+        		1, range.getLowerBound(), 0.000000001d);
+    }
+
+
+    @Test
+    public void testGetLowerBoundReturnsLowerBoundWhenLowerIsNegativeAndUpperisPositve() {
+    	// Setup
+        Range range = new Range(-1, 1);
+
+    	//Exercise and Verify
+        assertEquals("When lower is negative and upper are positive, lower should be returned",
+        		-1, range.getLowerBound(), 0.000000001d);
+    }
+
+    @Test
+    public void testGetLowerBoundReturnsLowerBoundWhenBothLowerAndUpperAreNegative() {
+    	// Setup
+        Range range = new Range(-6.8, -1);
+
+    	//Exercise and Verify
+        assertEquals("When the both lower and upper are negative, lower should be returned",
+        		-6.8, range.getLowerBound(), 0.000000001d);
+    }
+
+    @Test
+    public void testGetLowerBoundReturnsLowerBoundWhenLowerIsNegativeAndUpperisZero() {
+    	// Setup
+        Range range = new Range(-10, 0);
+
+    	//Exercise and Verify
+        assertEquals("When lower is negative and upper is zero, lower should be returned",
+        		-10, range.getLowerBound(), 0.000000001d);
+    }
+
+    @Test
+    public void testGetLowerBoundReturnsLowerBoundWhenLowerIsZeroAndUpperisPositve() {
+    	// Setup
+        Range range = new Range(0, 8);
+
+    	//Exercise and Verify
+        assertEquals("When lower is zero and upper are positive, zero should be returned",
+        		0, range.getLowerBound(), 0.000000001d);
+    }
+
+
+    @Test
+    public void testGetLowerBoundReturnsLowerBoundWhenBothLowerAndUpperAreZero() {
+    	// Setup
+        Range range = new Range(0, 0);
+
+    	//Exercise and Verify
+        assertEquals("When the both lower and upper are zero, zero should be returned",
+        		0, range.getLowerBound(), 0.000000001d);
+    }
+
+    
+    /**
+     * End of tests for getLowerBound method
+     */
 }
