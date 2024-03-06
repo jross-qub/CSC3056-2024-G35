@@ -14,6 +14,7 @@ public class DataUtilitiesTest
 	private Values2D testData2D;
 	private Values2D emptyTestData2D;
 	private Values2D nullTestData2D;
+	private Values2D testData2D_2;
 
 	@Before
 	public void setUp()
@@ -45,6 +46,21 @@ public class DataUtilitiesTest
 		
 		DefaultKeyedValues2D nullTestData = null;
 		nullTestData2D = nullTestData;
+		
+		DefaultKeyedValues2D testData2 = new DefaultKeyedValues2D();
+		testData2D_2 = testData2;
+		testData2.addValue(1, 0, 0);
+		testData2.addValue(3, 0, 1);
+		testData2.addValue(8, 1, 0);
+		testData2.addValue(9, 1, 1);
+		testData2.addValue(5.7, 2, 0);
+		testData2.addValue(3.2, 2, 1);
+		testData2.addValue(1.4, 3, 0);
+		testData2.addValue(3, 3, 1);
+		testData2.addValue(3, 4, 0);
+		testData2.addValue(7, 4, 1);
+		testData2.addValue(8, 5, 0);
+		testData2.addValue(2, 5, 1);
 
 	}
 
@@ -167,6 +183,96 @@ public class DataUtilitiesTest
 			assertTrue("Incorrect exception type thrown",
 					e.getClass().equals(IllegalArgumentException.class));
 			
+		}
+	}
+	
+	/**
+	 * Test for DataUtilities calculateRowTotal Method
+	 */
+	
+	@Test
+	public void testCalculateRowTotalReturns0WhenRowIsLessThanMinimum()
+	{
+		try
+		{
+		assertEquals("Wrong sum returned. It should be 0", 0, DataUtilities.calculateRowTotal(testData2D_2, -1), 0.0000001d);
+		}
+		catch (Exception e)
+		{
+			assertTrue("Incorrect exception type thrown",
+					e.getClass().equals(IndexOutOfBoundsException.class));
+			fail("Exception was thrown. Expected return value equal to 0");
+		}
+	}
+	
+	@Test
+	public void testCalculateRowTotalReturnsTotalWhenRowIsMinimumValue()
+	{
+		assertEquals("Wrong sum returned. It should be 4", 4, DataUtilities.calculateRowTotal(testData2D_2, 0), 0.0000001d);
+	}
+	
+	@Test
+	public void testCalculateRowTotalReturnsTotalWhenRowIsOneAboveMinimumValue()
+	{
+		assertEquals("Wrong sum returned. It should be 17", 17, DataUtilities.calculateRowTotal(testData2D_2, 1), 0.0000001d);
+	}
+	
+	@Test
+	public void testCalculateRowTotalReturnsTotalWhenRowIsANormalValue()
+	{
+		assertEquals("Wrong sum returned. It should be 8.9", 8.9, DataUtilities.calculateRowTotal(testData2D_2, 2), 0.0000001d);
+	}
+	
+	@Test
+	public void testCalculateRowTotalReturnsTotalWhenRowIsOneLessThanMaximumValue()
+	{
+		assertEquals("Wrong sum returned. It should be 10", 10, DataUtilities.calculateRowTotal(testData2D_2, 4), 0.0000001d);
+	}
+	
+	@Test
+	public void testCalculateRowTotalReturnsTotalWhenRowIsMaximumValue()
+	{
+		assertEquals("Wrong sum returned. It should be 10", 10, DataUtilities.calculateRowTotal(testData2D_2, 5), 0.0000001d);
+	}
+	
+	@Test
+	public void testCalculateRowTotalReturns0WhenRowIsAboveMaximum()
+	{
+		try
+		{
+			assertEquals("Wrong sum returned. It should be 0", 0, DataUtilities.calculateRowTotal(testData2D_2, 6), 0.0000001d);
+		}
+		catch (Exception e)
+		{
+			assertTrue("Incorrect exception type thrown",
+					e.getClass().equals(IndexOutOfBoundsException.class));
+		}
+	}
+	
+	@Test
+	public void testCalculateRowTotalReturns0WhenRowIsNegativeAndDataIsEmpty()
+	{
+		assertEquals("Wrong sum returned. It should be 0", 0, DataUtilities.calculateRowTotal(emptyTestData2D, -1), 0.0000001d);
+	}
+	
+	@Test
+	public void testCalculateRowTotalReturns0WhenRowIsPositiveAndDataIsEmpty()
+	{
+		assertEquals("Wrong sum returned. It should be 0", 0, DataUtilities.calculateRowTotal(emptyTestData2D, 3), 0.0000001d);
+	}
+	
+	@Test
+	public void testCalculateRowTotalThrowsExceptionWhenRowIsPositiveAndDataIsNull()
+	{
+		try
+		{
+			DataUtilities.calculateRowTotal(nullTestData2D, 3);
+			fail("No exception thrown");
+		}
+		catch (Exception e)
+		{
+			assertTrue("Incorrect exception type thrown",
+					e.getClass().equals(IllegalArgumentException.class));
 		}
 	}
 }
