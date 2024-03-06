@@ -2,8 +2,10 @@ package org.jfree.data.test;
 
 
 import org.jfree.data.DataUtilities;
+import org.jfree.data.DefaultKeyedValues;
 import org.jfree.data.DefaultKeyedValues2D;
 import org.jfree.data.Values2D;
+import org.jfree.data.KeyedValues;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -14,6 +16,10 @@ public class DataUtilitiesTest
 	private Values2D emptyTestData2D;
 	private Values2D nullTestData2D;
 	private Values2D testData2D_2;
+	private KeyedValues testDataKeyedValues;
+	private KeyedValues expectedOutputKeyedValues;
+	private KeyedValues emptyKeyedValues;
+	private KeyedValues nullKeyedValues;
 
 	@Before
 	public void setUp()
@@ -60,6 +66,25 @@ public class DataUtilitiesTest
 		testData2.addValue(7, 4, 1);
 		testData2.addValue(8, 5, 0);
 		testData2.addValue(2, 5, 1);
+		
+		DefaultKeyedValues testData3 = new DefaultKeyedValues();
+		testDataKeyedValues = testData3;
+		testData3.addValue((Comparable) 0, 1);
+		testData3.addValue((Comparable) 1, 9);
+		testData3.addValue((Comparable) 2, 5);
+		
+		DefaultKeyedValues expectedOutput = new DefaultKeyedValues();
+		expectedOutputKeyedValues = expectedOutput;
+		expectedOutput.addValue((Comparable) 0, 0.06666667);
+		expectedOutput.addValue((Comparable) 1, 0.66666667);
+		expectedOutput.addValue((Comparable) 2, 1.0);
+		
+		DefaultKeyedValues emptyTestData2 = new DefaultKeyedValues();
+		emptyKeyedValues = emptyTestData2;
+		
+		DefaultKeyedValues nullTestData2 = null;
+		nullKeyedValues = nullTestData2;
+		
 	}
 
 	@After
@@ -370,4 +395,34 @@ public class DataUtilitiesTest
 		}
 	}
 	
+	/**
+	 * Test for DataUtilities getCumulativePercentages Method
+	 */
+	
+	@Test
+	public void testGetCumulativePercentagesReturnsCorrectValuesWhenGoodDataIsInput()
+	{
+		assertEquals("Wrong output. Value at Key 0 should be 0.06666667", 0.06666667, DataUtilities.getCumulativePercentages(testDataKeyedValues).getValue(0));
+	}
+	
+	@Test
+	public void testGetCumulativePercentageReturnsEmptyKeyedValuesObjectWhenDataInputIsEmpty()
+	{
+		assertEquals("Wrong output. Should be empty KeyedValues object", emptyKeyedValues, DataUtilities.getCumulativePercentages(emptyKeyedValues));
+	}
+	
+	@Test
+	public void testGetCumulativePercentageThrowsExceptionWhenDataIsNull()
+	{
+		try
+		{
+			DataUtilities.getCumulativePercentages(nullKeyedValues);
+			fail("No exception thrown");
+		}
+		catch (Exception e)
+		{
+			assertTrue("Incorrect exception type thrown",
+					e.getClass().equals(IllegalArgumentException.class));
+		}
+	}
 }
