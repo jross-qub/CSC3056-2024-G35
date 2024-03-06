@@ -32,7 +32,131 @@ public class RangeTest {
     }
     
     /**
-     * Start of tests for contains() method
+     * Start of tests for combine method
+     */
+    
+    @Test
+    public void testCombineReturnsRange1WhenRange2IsNull() {
+    	// Setup
+    	Range range1 = new Range(2,6);
+    	
+    	//Exercise and Verify
+        assertEquals("When the input for range2 is null, the returned range should be equal to range1",
+        		range1, Range.combine(range1, null));
+    }
+    
+    @Test
+    public void testCombineReturnsExpanedRangeWhenRange1IsNegativeAndRange2IsPositive() {
+    	// Setup
+    	Range range1 = new Range(-7,-1);
+    	Range range2 = new Range(3,3);
+    	Range expectedRangeAfterTest = new Range(-7, 3);
+    	
+    	//Exercise and Verify
+    	try {
+    		assertEquals("When both a negative and a positive range are input, the returned range object should be expaned to include all values from both",
+            		expectedRangeAfterTest, Range.combine(range1, range2));
+    	} catch (IllegalArgumentException e) {
+    		fail("Exception was thrown. Expected return value is unchanged range object. Error message:" + e.getMessage());
+    	}
+    }
+    
+    @Test
+    public void testCombineReturnsExpanedRangeWhenBothRangesAcrossZero() {
+    	// Setup
+    	Range range1 = new Range(-3,4);
+    	Range range2 = new Range(-8,1);
+    	Range expectedRangeAfterTest = new Range(-8, 4);
+    	
+    	//Exercise and Verify
+        assertEquals("When both ranges have positive and negative values, the returned range object should be expaned to include all values from both",
+        		expectedRangeAfterTest, Range.combine(range1, range2));
+    }
+    
+    @Test
+    public void testCombineReturnsExpanedRangeWhenRange1IsPostiveAndRange2IsAcrossZero() {
+    	// Setup
+    	Range range1 = new Range(5,5);
+    	Range range2 = new Range(-6,-2);
+    	Range expectedRangeAfterTest = new Range(-6, 5);
+    	
+    	//Exercise and Verify
+        assertEquals("When range1 is positive and range2 has both positve and negative values, the returned range object should be expaned to include all values from both",
+        		expectedRangeAfterTest, Range.combine(range1, range2));
+    }
+    
+    @Test
+    public void testCombineReturnsRange2WhenRange1IsNull() {
+    	// Setup
+    	Range range2 = new Range(2,6);
+    	
+    	//Exercise and Verify
+        assertEquals("When the input for range1 is null, the returned range should be equal to range2",
+        		range2, Range.combine(null, range2));
+    }
+    
+    @Test
+    public void testCombineReturnsExpanedRangeWhenRange1IsPositiveAndRange2IsNegative() {
+    	// Setup
+    	Range range1 = new Range(5,10);
+    	Range range2 = new Range(-5,-3);
+    	Range expectedRangeAfterTest = new Range(-5, 10);
+    	
+    	//Exercise and Verify
+        assertEquals("When both a negative and a positive range are input, the returned range object should be expaned to include all values from both",
+        		expectedRangeAfterTest, Range.combine(range1, range2));
+    }
+    
+    @Test
+    public void testCombineReturnsExpanedRangeWhenRange1IsNegativeAndRange2IsAcrossZero() {
+    	// Setup
+    	Range range1 = new Range(-3,-1);
+    	Range range2 = new Range(-2,16);
+    	Range expectedRangeAfterTest = new Range(-3, 16);
+    	
+    	//Exercise and Verify
+    	try {
+    		assertEquals("When range1 is negative and range2 has both positve and negative values, the returned range object should be expaned to include all values from both",
+            		expectedRangeAfterTest, Range.combine(range1, range2));
+    	} catch (IllegalArgumentException e) {
+    		fail("Exception was thrown. Expected return value is unchanged range object. Error message:" + e.getMessage());
+    	}
+    }
+
+    @Test
+    public void testCombineReturnsExpanedRangeWhenRange1IsAcrossZeroAndRange2IsPositive() {
+    	// Setup
+    	Range range1 = new Range(-5,6);
+    	Range range2 = new Range(3,4);
+    	Range expectedRangeAfterTest = new Range(-5, 6);
+    	
+    	//Exercise and Verify
+    	try {
+    		assertEquals("When range1 has both positve and negative values and range2 is positive, the returned range object should be expaned to include all values from both",
+            		expectedRangeAfterTest, Range.combine(range1, range2));
+    	} catch (IllegalArgumentException e) {
+    		fail("Exception was thrown. Expected return value is unchanged range object. Error message:" + e.getMessage());
+    	}
+    }
+    
+    @Test
+    public void testCombineReturnsExpanedRangeWhenBothRangesArePositive() {
+    	// Setup
+    	Range range1 = new Range(10, 10);
+    	Range range2 = new Range(5,5);
+    	Range expectedRangeAfterTest = new Range(5, 10);
+    	
+    	//Exercise and Verify
+        assertEquals("When both ranges have positive values, the returned range object should be expaned to include all values from both",
+        		expectedRangeAfterTest, Range.combine(range1, range2));
+    }
+    
+    /**
+     * End of tests for combine method
+     */
+    
+    /**
+     * Start of tests for constrain method
      */
 
     /**
@@ -99,11 +223,11 @@ public class RangeTest {
     }
     
     /**
-     * End of tests for contains() method
+     * End of tests for constrain method
      */
     
     /**
-     * Start of tests for expandToInclude() method
+     * Start of tests for expandToInclude method
      */
     
     @Test
@@ -212,9 +336,19 @@ public class RangeTest {
         		expectedRangeAfterTest, Range.expandToInclude(rangeObjectToTest, 1));
     }
     
+    @Test
+    public void testExpandToIncludeReturnsARangeOfValueWhenRangeIsNullAndValueIsNegative() {
+    	// Setup
+    	Range rangeObjectToTest = null;
+    	Range expectedRangeAfterTest = new Range(-7, -7);
+    	
+    	//Exercise and Verify
+        assertEquals("When the range is null, the returned range object should be have lower and upper equal to value",
+        		expectedRangeAfterTest, Range.expandToInclude(rangeObjectToTest, -7));
+    }
+    
     /**
-     * End of tests for expandToInclude() method
+     * End of tests for expandToInclude method
      */
-    
-    
+   
 }
