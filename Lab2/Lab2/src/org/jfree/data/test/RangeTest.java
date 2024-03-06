@@ -36,7 +36,7 @@ public class RangeTest {
      */
     @Test
     public void testConstrainReturnsLowerBoundWhenValueIsLessThanLowerBound() {
-        assertEquals("When the value is less than the lower bound, the constrained value should be the lower bound of the range: -3",
+        assertEquals("When the value is less than the lower bound, the constrained value should be the lower bound of the range",
                 -3, rangeObjectUnderTest.constrain(-4), 0.000000001d);
     }
 
@@ -45,7 +45,7 @@ public class RangeTest {
      */
     @Test
     public void testConstrainReturnsValueWhenValueIsEqualToLowerBound() {
-        assertEquals("When the value equal to the lower bound, the constrained value should be the lower bound of the range: -3",
+        assertEquals("When the value equal to the lower bound, the constrained value should be the lower bound of the range",
                 -3, rangeObjectUnderTest.constrain(-3), 0.000000001d);
     }
 
@@ -54,7 +54,7 @@ public class RangeTest {
      */
     @Test
     public void testConstrainReturnsValueWhenValueIsOneGreaterThanLowerBound() {
-        assertEquals("When the value is greater than the lower bound, the constrained value should be the input value: -2",
+        assertEquals("When the value is greater than the lower bound, the constrained value should be the input value",
                 -2, rangeObjectUnderTest.constrain(-2), 0.000000001d);
     }
 
@@ -63,7 +63,7 @@ public class RangeTest {
      */
     @Test
     public void testConstrainReturnsValueWhenValueIsInsideRange() {
-        assertEquals("When the value inside the bounds of the range, the constrained value should be the input value: 0.4567",
+        assertEquals("When the value inside the bounds of the range, the constrained value should be the input value",
                 0.4567, rangeObjectUnderTest.constrain(0.4567), 0.000000001d);
     }
 
@@ -72,7 +72,7 @@ public class RangeTest {
      */
     @Test
     public void testConstrainReturnsValueWhenValueIsLessThanUpperBound() {
-        assertEquals("When the value is less than the upper bound, the constrained value should be the input value: 4",
+        assertEquals("When the value is less than the upper bound, the constrained value should be the input value",
                 4, rangeObjectUnderTest.constrain(4), 0.000000001d);
     }
 
@@ -81,7 +81,7 @@ public class RangeTest {
      */
     @Test
     public void testConstrainReturnsValueWhenValueIsEqualToUpperBound() {
-        assertEquals("When the value equal to the upper bound, the constrained value should be the lower bound of the range: 5",
+        assertEquals("When the value equal to the upper bound, the constrained value should be the lower bound of the range",
                 5, rangeObjectUnderTest.constrain(5), 0.000000001d);
     }
 
@@ -90,7 +90,7 @@ public class RangeTest {
      */
     @Test
     public void testConstrainReturnsUpperBoundWhenValueIsGreaterThanLowerBound() {
-        assertEquals("When the value is greater than the upper bound, the constrained value should be the upper bound of the range: 5",
+        assertEquals("When the value is greater than the upper bound, the constrained value should be the upper bound of the range",
                 5, rangeObjectUnderTest.constrain(6), 0.000000001d);
     }
 }
