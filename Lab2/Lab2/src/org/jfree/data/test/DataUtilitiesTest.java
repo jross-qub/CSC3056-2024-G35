@@ -322,4 +322,52 @@ public class DataUtilitiesTest
 		}
 	}
 	
+	/**
+	 * Test for DataUtilities createNumberArray2D Method
+	 */
+	
+	@Test
+	public void testCreateNumberArray2DReturnsCorrectNumberArrayWhenGoodPositiveDataIsInput()
+	{
+		double[][] data = {{0.1, 2.3}, {4.5, 6}};
+		Number[][] expectedOutput = {{0.1, 2.3}, {4.5, 6.0}};
+		
+		assertEquals("Wrong output. Should be Number array containing input data", expectedOutput, DataUtilities.createNumberArray2D(data));
+	}
+	
+	@Test
+	public void testCreateNumberArray2DReturnsCorrectNumberArrayWhenGoodNegativeDataIsInput()
+	{
+		double[][] data = {{-1, -4.4}, {-2.1, -0.3}};
+		Number[][] expectedOutput = {{-1.0, -4.4}, {-2.1, -0.3}};
+		
+		assertEquals("Wrong output. Should be Number array containing input data", expectedOutput, DataUtilities.createNumberArray2D(data));
+	}
+	
+	@Test
+	public void testCreateNumberArray2DReturnsEmptyNumberArrayWhenDataInputIsEmpty()
+	{
+		double[][] data = {};
+		Number[][] expectedOutput = {};
+		
+		assertEquals("Wrong output. Should be empty Number array", expectedOutput, DataUtilities.createNumberArray2D(data));
+	}
+	
+	@Test
+	public void testCreateNumberArray2DThrowsExceptionWhenDataIsNull()
+	{
+		double[][] data = null;
+		
+		try
+		{
+			DataUtilities.createNumberArray2D(data);
+			fail("No exception thrown");
+		}
+		catch (Exception e)
+		{
+			assertTrue("Incorrect exception type thrown",
+					e.getClass().equals(IllegalArgumentException.class));
+		}
+	}
+	
 }
