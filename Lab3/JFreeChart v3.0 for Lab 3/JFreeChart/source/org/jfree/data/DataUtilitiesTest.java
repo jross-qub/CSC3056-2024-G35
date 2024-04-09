@@ -454,18 +454,30 @@ public class DataUtilitiesTest
 	@Test
 	public void testCalculateColumnTotalReturnsColumnTotalIfNullValuesArePresentAndIgnoresNullValues()
 	{
-		assertEquals("Wrong sum returned. Should be 6", 6, DataUtilities.calculateColumnTotal(testData2DWithNullValues, 0));
+		assertEquals("Wrong sum returned. Should be 6", 6, DataUtilities.calculateColumnTotal(testData2DWithNullValues, 0), 0.0000001d);
 	}
 	
 	@Test
 	public void testCalculateRowTotalReturnsRowTotalIfNullValuesArePresentAndIgnoresNullValues()
 	{
-		assertEquals("Wrong sum returned. Should be 7.3", 7.3, DataUtilities.calculateRowTotal(testData2DWithNullValues, 1));
+		assertEquals("Wrong sum returned. Should be 7.3", 7.3, DataUtilities.calculateRowTotal(testData2DWithNullValues, 1), 0.0000001d);
 	}
 	
 	@Test
-	public void testGetCumulativePercentageReturnsCorrectValueIfNullValuesArePresentAndIgnoresNullValues()
+	public void testGetCumulativePercentageReturnsCorrectValueIfNullValuesArePresentAndIgnoresNullValuesCheckingPercentageBeforeNullValueIsHandled()
+	{
+		assertEquals("Wrong output. Should be 0.25", 0.25, DataUtilities.getCumulativePercentages(testDataKeyedValuesWithNullValues).getValue(0));
+	}
+	
+	@Test
+	public void testGetCumulativePercentageReturnsCorrectValueIfNullValuesArePresentAndIgnoresNullValuesCheckingPercentageWhenNullValueIsHandled()
 	{
 		assertEquals("Wrong output. Should be 0.25", 0.25, DataUtilities.getCumulativePercentages(testDataKeyedValuesWithNullValues).getValue(1));
+	}
+	
+	@Test
+	public void testGetCumulativePercentageReturnsCorrectValueIfNullValuesArePresentAndIgnoresNullValuesCheckingPercentageAfterNullValueIsHandled()
+	{
+		assertEquals("Wrong output. Should be 1.0", 1.00, DataUtilities.getCumulativePercentages(testDataKeyedValuesWithNullValues).getValue(2));
 	}
 }
