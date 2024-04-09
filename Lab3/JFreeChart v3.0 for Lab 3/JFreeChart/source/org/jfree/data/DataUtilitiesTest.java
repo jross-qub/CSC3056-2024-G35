@@ -20,6 +20,9 @@ public class DataUtilitiesTest
 	private KeyedValues expectedOutputKeyedValues;
 	private KeyedValues emptyKeyedValues;
 	private KeyedValues nullKeyedValues;
+	
+	private Values2D testData2DWithNullValues;
+	private KeyedValues testDataKeyedValuesWithNullValues;
 
 	@Before
 	public void setUp()
@@ -84,6 +87,24 @@ public class DataUtilitiesTest
 		
 		DefaultKeyedValues nullTestData2 = null;
 		nullKeyedValues = nullTestData2;
+		
+		DefaultKeyedValues2D testDataWithNullValues = new DefaultKeyedValues2D();
+		testData2DWithNullValues = testDataWithNullValues;
+		testDataWithNullValues.addValue(1, 0, 0);
+		testDataWithNullValues.addValue(null, 0, 1);
+		testDataWithNullValues.addValue(5.4, 0, 2);
+		testDataWithNullValues.addValue(null, 1, 0);
+		testDataWithNullValues.addValue(3, 1, 1);
+		testDataWithNullValues.addValue(4.3, 1, 2);
+		testDataWithNullValues.addValue(5, 2, 0);
+		testDataWithNullValues.addValue(8.9, 2, 1);
+		testDataWithNullValues.addValue(null, 2, 2);
+		
+		DefaultKeyedValues testDataWithNullValues2 = new DefaultKeyedValues();
+		testDataKeyedValuesWithNullValues = testDataWithNullValues2;
+		testDataWithNullValues2.addValue((Comparable) 0, 2);
+		testDataWithNullValues2.addValue((Comparable) 1, null);
+		testDataWithNullValues2.addValue((Comparable) 2, 6);
 		
 	}
 
@@ -424,5 +445,27 @@ public class DataUtilitiesTest
 			assertTrue("Incorrect exception type thrown",
 					e.getClass().equals(IllegalArgumentException.class));
 		}
+	}
+	
+	/**
+	 * Tests to achieve 100% Branch Coverage for DataUtilities 
+	 */
+	
+	@Test
+	public void testCalculateColumnTotalReturnsColumnTotalIfNullValuesArePresentAndIgnoresNullValues()
+	{
+		assertEquals("Wrong sum returned. Should be 6", 6, DataUtilities.calculateColumnTotal(testData2DWithNullValues, 0));
+	}
+	
+	@Test
+	public void testCalculateRowTotalReturnsRowTotalIfNullValuesArePresentAndIgnoresNullValues()
+	{
+		assertEquals("Wrong sum returned. Should be 7.3", 7.3, DataUtilities.calculateRowTotal(testData2DWithNullValues, 1));
+	}
+	
+	@Test
+	public void testGetCumulativePercentageReturnsCorrectValueIfNullValuesArePresentAndIgnoresNullValues()
+	{
+		assertEquals("Wrong output. Should be 0.25", 0.25, DataUtilities.getCumulativePercentages(testDataKeyedValuesWithNullValues).getValue(1));
 	}
 }
