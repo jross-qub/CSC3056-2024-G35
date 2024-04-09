@@ -330,6 +330,46 @@ public class RangeTest {
     /**
      * End of tests for expandToInclude(Range range, double value) method
      */
+    
+    /**
+     * Start of tests for expand(Range range, double lowerMargin, double upperMargin) method - White Box Testing
+     */
+    
+    @Test
+    public void testExpandRaisesCorrectExceptionWhenRangeIsNull() {
+    	// Setup
+    	Range rangeObjectToTest = null;
+    	double lowerMargin = 0; 
+    	double upperMargin = 5;
+    	
+    	//Exercise and Verify
+		try
+		{
+			Range.expand(rangeObjectToTest, lowerMargin, upperMargin);
+			fail("When range is null an exception should be thrown");
+		}
+		catch (Exception e)
+		{
+			assertTrue("When range is null an IllegalArgumentException should be thrown",
+					e.getClass().equals(IllegalArgumentException.class));
+		}
+    }
+    
+    @Test
+    public void testExpandToIncludeReturnsExpandedRangeWhenLowerMarginIsEqualToLowerBoundAndUpperMarginIsAboveUpperBound() {
+    	// Setup
+    	Range rangeObjectToTest = new Range(0, 10);
+    	Range expectedRangeAfterTest = new Range(0, 11);
+    	
+    	//Exercise and Verify
+    	assertEquals("When the lowerMargin is Equal to lowerBound and upperMargin is above UpperBound, the returned range object should have a new upperBound Equal to upperMargin",
+        		expectedRangeAfterTest, Range.expand(rangeObjectToTest, 0, 11 ));
+    }
+    
+    /**
+     * End of tests for expand method
+     */
+   
    
     /**
      * Start of tests for getLowerBound() method
@@ -400,6 +440,77 @@ public class RangeTest {
     
     /**
      * End of tests for getLowerBound() method
+     */
+    
+    /**
+     * Start of tests for hashcode() method - White Box Testing
+     */
+    
+    @Test 
+    public void testHashcodeReturnsHashcode() {
+    	// Setup
+   
+    	//Exercise and Verify
+        assertTrue("The return should be of type Int",
+        		Integer.class.isInstance(rangeObjectUnderTest.hashCode()));
+    }
+    
+    /**
+     * End of tests for hashcode method
+     */
+    
+    
+    /**
+     * Start of tests for intersects(double lower, double upper) method - White Box Testing
+     */
+    
+    @Test 
+    public void testIntersectsReturnsTrueWhenLowerIsBelowUpperBoundAndUpperIsAboveLowerBound() {
+    	// Setup
+        Double lower = -2.00;
+        Double upper = 6.00;
+
+    	//Exercise and Verify
+        assertTrue("When the lower is below upper bound and upper is above lower bound, the return should be true",
+        		rangeObjectUnderTest.intersects(lower, upper));
+    }
+    
+    @Test 
+    public void testIntersectsReturnsTrueWhenLowerIsEqualToLowerBoundAndUpperIsAboveLower() {
+    	// Setup
+        Double lower = -3.00;
+        Double upper = 6.00;
+        
+
+    	//Exercise and Verify
+        assertTrue("When the lower is equal to lower bound and upper is above lower bound, the return should be false",
+        		rangeObjectUnderTest.intersects(lower, upper));
+    }
+    
+    @Test 
+    public void testIntersectsReturnsFalseWhenLowerIsAboveUpperBoundAndUpperIsBelowUpperBound() {
+    	// Setup
+        Double lower = 6.00;
+        Double upper = 7.00;
+
+    	//Exercise and Verify
+        assertFalse("When the lower is above upper bound and upper is above upper bound, the return should be false",
+        		rangeObjectUnderTest.intersects(lower, upper));
+    }
+    
+    @Test 
+    public void testIntersectsReturnsFalseWhenLowerIsEqualToLowerAndUpperIsBelowLowerBound() {
+    	// Setup
+        Double lower = -3.00;
+        Double upper = -4.00;
+
+    	//Exercise and Verify
+        assertFalse("When the lower is equal to lower bound and upper is below lower bound, the return should be true",
+        		rangeObjectUnderTest.intersects(lower, upper));
+    }
+    
+    /**
+     * End of tests for intersects method
      */
     
     /**
@@ -533,4 +644,7 @@ public class RangeTest {
     /**
      * End of tests for shift method
      */
+    
+    
+    
 }
